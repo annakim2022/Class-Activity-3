@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Class Activity 3</string>
+    <string name="SecondActivity">Weather</string>
+    <string name="button_go">go</string>
+    <string name="searchByCity">Enter city name</string>
+    <string name="feelsLabel">Feels like</string>
+</resources>
