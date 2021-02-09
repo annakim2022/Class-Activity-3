@@ -55,26 +55,21 @@ public class MainActivity extends AppCompatActivity {
     }
     public void launchNextActivity(View view) {
         String city = searchView_city.getQuery().toString();
-        String api_url = "http://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&cnt=21&appid=997475d54886c4fb4db2803703fb4007&units=imperial";
+        String api_url = "http://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&cnt=40&appid=997475d54886c4fb4db2803703fb4007&units=imperial";
+
         client.get(api_url, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.d("api response", new String(responseBody));
 
+                JSONObject json = null;
                 try {
 
-                    JSONObject json = new JSONObject(new String(responseBody));
+                    json = new JSONObject(new String(responseBody));
                     Intent intent = new Intent(MainActivity.this, SecondActivity.class);
 
-                    /*
-                    JSONObject sys = json.getJSONObject("sys");
-                    String country = sys.getString("country");
-                    String location = city + ", " + country;
-                    intent.putExtra("location", location);
-                     */
 
-                    intent.putExtra("location", city);
 
                     JSONArray list = json.getJSONArray("list");
                     descriptions = new ArrayList<>();
@@ -92,7 +87,14 @@ public class MainActivity extends AppCompatActivity {
                         feelsLikes.add(feels_like.getString("feels_like"));
 
                         dts.add(object.getString("dt_txt"));
+
                     }
+
+                    JSONObject object = json.getJSONObject("city");
+                    String country = object.getString("country");
+                    String location = city + ", " + country;
+                    intent.putExtra("location", location);
+                    Log.d("location", country);
 
                     intent.putExtra("descriptions", descriptions);
                     intent.putExtra("feelsLikes", feelsLikes);
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
 
             }
 
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
 
     }

@@ -39,6 +39,7 @@ public class SecondActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView_weather);
         weathers = new ArrayList<>();
         Intent intent = getIntent();
+        //Log.d("location", intent.getStringExtra("location"));
 
         if (intent.getStringExtra("location")==null) {
             textView_noCity = findViewById(R.id.textView_noCity);
